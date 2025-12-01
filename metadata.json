@@ -1,0 +1,5 @@
+{
+  "name": "InvoiceAI - Commercial Invoice Extractor",
+  "description": "Intelligent extraction system for commercial invoices using Gemini 2.5 Flash. Identifies POs, quantities, and values automatically.",
+  "requestFramePermissions": []
+}
