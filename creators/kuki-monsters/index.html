@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en" class="loading">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!--
+    Secret Kitchens creator page template.
+    Everything creator-specific comes from ./data/creator.json — do not hard-code
+    names, handles, links or copy in this file. See README.md for how to clone.
+  -->
+  <title>Creator · Secret Kitchens</title>
+  <meta name="description" content="A creator in the Secret Kitchens network.">
+  <meta name="theme-color" content="#0B0B0B">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Creator · Secret Kitchens">
+  <meta property="og:description" content="A creator in the Secret Kitchens network.">
+  <meta property="og:image" content="">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preload" as="fetch" href="data/creator.json" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&display=swap"></noscript>
+<style>
+  :root {
+    --bg: #0B0B0B; --bg-2: #141414; --bg-3: #1D1D1D;
+    --accent: #F5B841; --accent-2: #F27D26;
+    --text: #F4EFE6; --muted: #A9A398; --line: rgba(255,255,255,.1);
+    --shadow: 0 20px 50px rgba(0,0,0,.5);
+    --display: "Anton", Impact, "Arial Narrow", sans-serif;
+    --body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --radius: 18px; --gutter: 16px; --max: 1180px;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #FAF6EE; --bg-2: #FFFFFF; --bg-3: #F1EBDF;
+      --text: #171512; --muted: #5F5A51; --line: rgba(0,0,0,.1);
+      --shadow: 0 16px 40px rgba(40,30,10,.12);
+      color-scheme: light;
+    }
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 var(--body); overflow-x: hidden; }
+  img, video { max-width: 100%; display: block; }
+  a { color: inherit; }
+  button, input, textarea, select { font: inherit; color: inherit; }
+  .wrap { width: min(100% - var(--gutter) * 2, var(--max)); margin-inline: auto; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  section { padding: clamp(40px, 7vw, 88px) 0; }
+  h2 { font: 400 clamp(34px, 6vw, 60px)/1 var(--display); letter-spacing: .01em; text-transform: uppercase; margin: 0 0 8px; }
+  .kicker { color: var(--accent); font-weight: 800; letter-spacing: .18em; text-transform: uppercase; font-size: 12px; margin: 0 0 10px; }
+  .lede { color: var(--muted); max-width: 60ch; margin: 0 0 28px; }
+  .divider { height: 48px; background: var(--divider-img) center / auto 100% repeat-x; opacity: .55; }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .divider { opacity: .35; filter: invert(1) hue-rotate(180deg); } }
+
+  /* Buttons */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 12px 22px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-3); text-decoration: none; font-weight: 700; cursor: pointer; transition: transform .15s ease, background .15s ease; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-accent { background: var(--accent); color: #0B0B0B; border-color: transparent; }
+  .btn-ghost { background: transparent; }
+  .btn[aria-disabled="true"] { opacity: .75; cursor: default; pointer-events: none; }
+  .btn small { font-weight: 600; opacity: .7; font-size: 12px; }
+  .btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+  /* Hero */
+  .hero { position: relative; min-height: 92svh; display: grid; place-items: center; text-align: center; padding: 72px 0 56px; isolation: isolate; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; z-index: -2; background: var(--hero-poster, radial-gradient(120% 70% at 50% 100%, #F27D26 0%, #7A2E0A 35%, #0B0B0B 75%)) center / cover no-repeat #0B0B0B; }
+  .hero-bg video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.2s ease; }
+  .hero-bg video.ready { opacity: 1; }
+  .hero-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(11,11,11,.55) 0%, rgba(11,11,11,.35) 45%, var(--bg) 100%); }
+  .hero .logo { width: min(78vw, 360px); aspect-ratio: 16 / 10; object-fit: contain; margin: 0 auto 18px; filter: drop-shadow(0 12px 30px rgba(0,0,0,.6)); }
+  .hero h1 { font: 400 clamp(52px, 12vw, 120px)/.92 var(--display); text-transform: uppercase; margin: 0; color: #F4EFE6; letter-spacing: .01em; }
+  .hero .handle { display: inline-block; margin-top: 12px; font-weight: 800; color: var(--accent); letter-spacing: .04em; text-decoration: none; }
+  .hero .hook { max-width: 48ch; margin: 18px auto 26px; font-size: clamp(17px, 2.4vw, 21px); color: #F4EFE6; }
+  .hero .tagline { color: #d9d2c5; font-size: 14px; letter-spacing: .06em; margin: 0 0 24px; }
+  .socials { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .hero-shade { background: linear-gradient(180deg, rgba(11,11,11,.45) 0%, rgba(11,11,11,.25) 50%, var(--bg) 100%); } }
+
+  /* Stats */
+  .stats { padding: 28px 0 40px; }
+  .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  @media (min-width: 720px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+  .stat { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 18px; }
+  .stat .num { font: 400 clamp(44px, 9vw, 84px)/1 var(--display); color: var(--accent); font-variant-numeric: tabular-nums; }
+  .stat .lbl { color: var(--muted); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; margin-top: 6px; }
+  .stats-note { color: var(--muted); font-size: 12px; margin: 12px 2px 0; display: flex; gap: 8px; align-items: center; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); display: inline-block; }
+  .dot.live { background: #4BD37B; box-shadow: 0 0 0 4px rgba(75,211,123,.15); }
+
+  /* Milestone */
+  .milestone { padding: 0 0 56px; }
+  .ms-card { background: linear-gradient(135deg, var(--bg-2), var(--bg-3)); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 20px; display: grid; gap: 14px; }
+  @media (min-width: 720px) { .ms-card { grid-template-columns: 1fr auto; align-items: center; } }
+  .ms-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-weight: 800; }
+  .ms-head .next { font: 400 34px/1 var(--display); color: var(--accent); }
+  .bar { height: 14px; background: rgba(127,127,127,.2); border-radius: 999px; overflow: hidden; margin: 10px 0 8px; }
+  .bar > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent-2), var(--accent)); border-radius: inherit; transition: width 1.4s cubic-bezier(.2,.8,.2,1); }
+  .ms-scale { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .06em; }
+  .ms-scale span.done { color: var(--accent); }
+
+  /* Review grid */
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  @media (min-width: 720px) { .grid { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
+  @media (min-width: 1000px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+  .card { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: transform .2s ease, box-shadow .2s ease; }
+  .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .thumb { position: relative; aspect-ratio: 9 / 16; background: var(--bg-3); display: block; color: inherit; text-decoration: none; overflow: hidden; }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+  .card:hover .thumb img { transform: scale(1.04); }
+  .thumb .play { position: absolute; inset: 0; display: grid; place-items: center; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.65) 100%); opacity: .85; transition: opacity .2s ease; }
+  .card:hover .thumb .play { opacity: 1; }
+  .play b { width: 58px; height: 58px; border-radius: 50%; background: rgba(11,11,11,.7); border: 2px solid var(--accent); display: grid; place-items: center; backdrop-filter: blur(4px); }
+  .play b::after { content: ""; border-left: 18px solid var(--accent); border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 5px; }
+  .pin { position: absolute; top: 10px; left: 10px; background: rgba(11,11,11,.75); color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .1em; padding: 5px 9px; border-radius: 999px; text-transform: uppercase; }
+  .score { position: absolute; top: 10px; right: 10px; width: 52px; height: 52px; border-radius: 50%; background: var(--accent); color: #0B0B0B; display: grid; place-items: center; font: 400 17px/1 var(--display); box-shadow: 0 6px 16px rgba(0,0,0,.35); }
+  .score small { font: 700 9px/1 var(--body); letter-spacing: .06em; margin-top: 2px; }
+  .views { position: absolute; bottom: 10px; left: 10px; font-size: 12px; font-weight: 700; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.8); display: flex; align-items: center; gap: 5px; }
+  .views svg { width: 14px; height: 14px; fill: currentColor; }
+  .card-body { padding: 12px 12px 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .card h3 { margin: 0; font-size: 15px; line-height: 1.3; font-weight: 800; }
+  .card .venue { color: var(--muted); font-size: 13px; }
+  .card .cta { margin-top: auto; padding-top: 8px; display: grid; gap: 6px; }
+  .card .btn { min-height: 40px; padding: 8px 14px; font-size: 13px; }
+  .invite { font-size: 12px; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+  .embed { aspect-ratio: 9 / 16; background: #000; }
+  .embed blockquote { margin: 0; }
+  .embed iframe { width: 100%; height: 100%; border: 0; }
+
+  /* Kitchens scroller */
+  .scroller { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px var(--gutter) 18px; margin: 0 calc(var(--gutter) * -1); scrollbar-width: thin; }
+  .kitchen { flex: 0 0 min(72vw, 260px); scroll-snap-align: start; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; display: grid; gap: 4px; position: relative; text-decoration: none; }
+  .kitchen .k-score { position: absolute; top: 14px; right: 14px; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: #0B0B0B; display: grid; place-items: center; font: 400 15px/1 var(--display); }
+  .kitchen h3 { margin: 0; padding-right: 54px; font-size: 17px; }
+  .kitchen .meta { color: var(--muted); font-size: 13px; }
+  .kitchen .tag { margin-top: 8px; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+
+  /* About */
+  .about-grid { display: grid; gap: 22px; }
+  @media (min-width: 820px) { .about-grid { grid-template-columns: 1.3fr 1fr; gap: 40px; } }
+  .about .bio { font: 400 clamp(26px, 4.5vw, 40px)/1.15 var(--display); text-transform: uppercase; margin: 0 0 14px; }
+  .about ul { padding-left: 18px; margin: 8px 0 0; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .chip { padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-2); font-size: 13px; font-weight: 700; }
+
+  /* Media kit */
+  .kit { display: grid; gap: 14px; }
+  @media (min-width: 820px) { .kit { grid-template-columns: repeat(3, 1fr); } }
+  .panel { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+  .panel h3 { margin: 0 0 12px; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+  .kv { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 14px; }
+  .kv:first-of-type { border-top: 0; }
+  .kv b { font: 400 22px/1 var(--display); }
+  .kv .upd { color: var(--accent-2); font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .offer + .offer { border-top: 1px solid var(--line); padding-top: 12px; margin-top: 12px; }
+  .offer b { display: block; margin-bottom: 2px; }
+  .offer span { color: var(--muted); font-size: 14px; }
+
+  /* Forms */
+  form { display: grid; gap: 12px; }
+  .f-row { display: grid; gap: 12px; }
+  @media (min-width: 620px) { .f-row { grid-template-columns: 1fr 1fr; } }
+  label { display: grid; gap: 6px; font-size: 13px; font-weight: 700; }
+  input, textarea, select { width: 100%; min-height: 48px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-3); color: var(--text); }
+  textarea { min-height: 120px; resize: vertical; }
+  input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .hp { position: absolute; left: -9999px; }
+  .form-msg { font-size: 14px; min-height: 1.4em; }
+  .form-msg.ok { color: #4BD37B; } .form-msg.err { color: #FF7A6E; }
+  .two { display: grid; gap: 22px; }
+  @media (min-width: 900px) { .two { grid-template-columns: 1fr 1fr; gap: 40px; } }
+
+  /* Share */
+  .share { text-align: center; }
+  .share-box { display: grid; gap: 18px; justify-items: center; }
+  .qr { width: 196px; height: 196px; border-radius: 16px; background: #fff; padding: 10px; display: grid; place-items: center; }
+  .qr canvas { width: 176px !important; height: 176px !important; }
+
+  /* Footer */
+  footer { border-top: 1px solid var(--line); padding: 40px 0 calc(40px + env(safe-area-inset-bottom)); color: var(--muted); font-size: 14px; }
+  .foot { display: grid; gap: 18px; align-items: center; }
+  @media (min-width: 820px) { .foot { grid-template-columns: auto 1fr auto; } }
+  .foot .logo { width: 84px; opacity: .9; }
+  .foot a { color: var(--text); }
+
+  /* Motion */
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+  /* Hold the JS-rendered blocks invisible until creator.json is applied, so nothing shifts (CLS). */
+  html.loading .hero .wrap, html.loading .ms-card, html.loading .stats-note { visibility: hidden; }
+  #hook { min-height: 3.1em; } .socials { min-height: 48px; } #tagline { min-height: 1.5em; } .ms-card { min-height: 168px; } #grid { min-height: 50vh; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); background: var(--accent); color: #0B0B0B; font-weight: 800; padding: 12px 18px; border-radius: 999px; opacity: 0; pointer-events: none; transition: .25s ease; z-index: 50; }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+</style>
+</head>
+<body>
+<a class="sr" href="#reviews">Skip to reviews</a>
+
+<!-- 1. Hero -->
+<header class="hero" id="top">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-shade"></div>
+  <div class="wrap">
+    <img class="logo" id="logo" alt="" width="360" height="225" fetchpriority="high">
+    <h1 id="name">&nbsp;</h1>
+    <a class="handle" id="handle" target="_blank" rel="noopener"></a>
+    <p class="tagline" id="tagline"></p>
+    <p class="hook" id="hook"></p>
+    <div class="socials" id="socials"></div>
+  </div>
+</header>
+
+<!-- 2. Live stats -->
+<section class="stats" aria-labelledby="stats-h">
+  <div class="wrap">
+    <h2 id="stats-h" class="sr">Stats</h2>
+    <div class="stats-grid" id="stats">
+      <div class="stat"><div class="num" data-stat="followers" data-value="0">0</div><div class="lbl">Followers</div></div>
+      <div class="stat"><div class="num" data-stat="likes" data-value="0">0</div><div class="lbl">Likes</div></div>
+      <div class="stat"><div class="num" data-stat="videos" data-value="0">0</div><div class="lbl">Videos</div></div>
+      <div class="stat"><div class="num" data-stat="kitchens" data-value="0">0</div><div class="lbl">Kitchens reviewed</div></div>
+    </div>
+    <p class="stats-note" id="statsNote"><span class="dot"></span><span>Loading live numbers…</span></p>
+  </div>
+</section>
+
+<!-- 3. Milestone -->
+<section class="milestone" aria-labelledby="ms-h">
+  <div class="wrap">
+    <h2 id="ms-h" class="sr">Next milestone</h2>
+    <div class="ms-card reveal" id="milestone"></div>
+  </div>
+</section>
+
+<div class="divider" role="presentation"></div>
+
+<!-- 4. Latest reviews -->
+<section id="reviews" aria-labelledby="rev-h">
+  <div class="wrap">
+    <p class="kicker">Latest reviews</p>
+    <h2 id="rev-h">Did it pass the Kuki test?</h2>
+    <p class="lede" id="revLede"></p>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<!-- 5. Kitchens discovered -->
+<section id="kitchens" aria-labelledby="kit-h" style="padding-top:0">
+  <div class="wrap">
+    <p class="kicker">Kitchens they've discovered</p>
+    <h2 id="kit-h">On the map</h2>
+    <p class="lede">Every kitchen, truck and stall that's been through a review. Tap one to jump to the review.</p>
+  </div>
+  <div class="wrap"><div class="scroller" id="scroller"></div></div>
+</section>
+
+<div class="divider" role="presentation"></div>
+
+<!-- 6. About -->
+<section class="about" id="about" aria-labelledby="about-h">
+  <div class="wrap about-grid">
+    <div>
+      <p class="kicker">About</p>
+      <h2 id="about-h" class="sr">About</h2>
+      <p class="bio" id="bio"></p>
+      <p class="lede" id="aboutText"></p>
+    </div>
+    <div>
+      <div class="panel">
+        <h3>What they look for</h3>
+        <ul id="lookFor"></ul>
+        <h3 style="margin-top:18px">Areas covered</h3>
+        <div class="chips" id="areas"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Work with me -->
+<section id="work" aria-labelledby="work-h">
+  <div class="wrap">
+    <p class="kicker">Work with me</p>
+    <h2 id="work-h">Media kit</h2>
+    <p class="lede">Put your kitchen in front of an audience that turns up hungry.</p>
+    <div class="kit">
+      <div class="panel"><h3>Reach</h3><div id="kitStats"></div></div>
+      <div class="panel"><h3>Audience</h3><div id="kitAudience"></div></div>
+      <div class="panel"><h3>What they offer</h3><div id="kitOffers"></div></div>
+    </div>
+    <div class="two" style="margin-top:22px">
+      <div class="panel">
+        <h3>Get in touch</h3>
+        <form id="contactForm" novalidate>
+          <div class="f-row">
+            <label>Your name <input name="name" required autocomplete="name"></label>
+            <label>Email <input name="email" type="email" required autocomplete="email"></label>
+          </div>
+          <div class="f-row">
+            <label>Business / kitchen <input name="company" autocomplete="organization"></label>
+            <label>Budget (optional) <input name="budget" placeholder="e.g. product only, $200, …"></label>
+          </div>
+          <label>What do you have in mind? <textarea name="message" required></textarea></label>
+          <input class="hp" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn btn-accent" type="submit" data-ref="contact-submit">Send enquiry</button>
+          <p class="form-msg" aria-live="polite"></p>
+        </form>
+      </div>
+      <!-- 8. Suggest a kitchen -->
+      <div class="panel" id="suggest">
+        <h3>Suggest a kitchen</h3>
+        <p class="lede" style="margin-bottom:14px;font-size:14px" id="suggestLede"></p>
+        <form id="suggestForm" novalidate>
+          <div class="f-row">
+            <label>Venue / truck name <input name="venue" required></label>
+            <label>Suburb <input name="suburb"></label>
+          </div>
+          <label>Link (Instagram, website, maps…) <input name="link" type="url" placeholder="https://"></label>
+          <label>Why should they go? <textarea name="why"></textarea></label>
+          <label>Your email (optional, if you want a heads-up) <input name="email" type="email" autocomplete="email"></label>
+          <input class="hp" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn btn-accent" type="submit" data-ref="suggest-submit">Send suggestion</button>
+          <p class="form-msg" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" role="presentation"></div>
+
+<!-- 9. Share -->
+<section class="share" id="share" aria-labelledby="share-h">
+  <div class="wrap share-box">
+    <div>
+      <p class="kicker">Share</p>
+      <h2 id="share-h">Send this page to a mate</h2>
+    </div>
+    <div class="qr" id="qr" aria-label="QR code for this page"></div>
+    <div class="socials">
+      <button class="btn" id="copyBtn" data-ref="copy-link"><svg viewBox="0 0 24 24"><path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"/></svg>Copy link</button>
+      <a class="btn btn-accent" id="followBtn" target="_blank" rel="noopener" data-ref="follow-tiktok"></a>
+    </div>
+  </div>
+</section>
+
+<!-- 10. Footer -->
+<footer>
+  <div class="wrap foot">
+    <img class="logo" id="footLogo" alt="" width="84" height="53" loading="lazy">
+    <div>
+      <div>Part of the <a id="networkLink" target="_blank" rel="noopener" data-ref="footer-network">Secret Kitchens</a> creator network.</div>
+      <div id="footNote" style="margin-top:4px"></div>
+    </div>
+    <a class="btn btn-ghost" id="registerBtn" target="_blank" rel="noopener" data-ref="footer-register">Are you a home cook or food truck? Get your free page</a>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(async function () {
+  "use strict";
+
+  const $ = (s, r = document) => r.querySelector(s);
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const fmt = (n) => Number(n || 0).toLocaleString("en-AU");
+  const short = (n) => n >= 1e6 ? (n / 1e6).toFixed(1).replace(/\.0$/, "") + "M" : n >= 1e3 ? (n / 1e3).toFixed(1).replace(/\.0$/, "") + "K" : String(n);
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ------------------------------------------------------------ data
+  let C;
+  try {
+    C = await (await fetch("data/creator.json", { cache: "no-cache" })).json();
+  } catch (e) {
+    document.documentElement.classList.remove("loading");
+    document.body.innerHTML = '<p style="padding:40px;text-align:center">Could not load creator data.</p>';
+    return;
+  }
+  const NET = C.network || {};
+  const slug = C.slug;
+  const tiktok = C.socials?.tiktok?.url || "#";
+  const pageUrl = location.origin + location.pathname;
+
+  // Outbound links to secret-kitchens.com get UTM; CTAs get data-ref.
+  const withUtm = (url) => {
+    if (!url) return url;
+    try {
+      const u = new URL(url, location.href);
+      if (/(^|\.)secret-kitchens\.com$/i.test(u.hostname) && NET.utm) {
+        for (const kv of NET.utm.split("&")) { const [k, v] = kv.split("="); if (!u.searchParams.has(k)) u.searchParams.set(k, v); }
+      }
+      return u.toString();
+    } catch { return url; }
+  };
+  const registerUrl = () => {
+    const u = new URL(NET.registerUrl || NET.siteUrl || "https://secret-kitchens.com", location.href);
+    u.searchParams.set("ref", NET.ref || slug);
+    return withUtm(u.toString());
+  };
+
+  // ------------------------------------------------------------ head / theme
+  const T = C.theme || {};
+  const root = document.documentElement.style;
+  if (T.accent) root.setProperty("--accent", T.accent);
+  if (T.accent2) root.setProperty("--accent-2", T.accent2);
+  // Background/text from the theme only apply to the dark scheme; the light scheme keeps its own palette.
+  const darkMq = matchMedia("(prefers-color-scheme: dark)");
+  const applyScheme = () => { if (darkMq.matches) { if (T.bg) root.setProperty("--bg", T.bg); if (T.text) root.setProperty("--text", T.text); } else { root.removeProperty("--bg"); root.removeProperty("--text"); } };
+  applyScheme(); darkMq.addEventListener("change", applyScheme);
+  if (T.divider) root.setProperty("--divider-img", `url("${T.divider}")`);
+  const poster = matchMedia("(orientation: portrait)").matches && T.heroVideo?.posterPortrait ? T.heroVideo.posterPortrait : T.heroVideo?.poster;
+  if (poster) root.setProperty("--hero-poster", `url("${poster}")`);
+
+  document.title = `${C.name} (${C.handle}) · Secret Kitchens creator`;
+  const setMeta = (sel, v) => { const m = $(sel); if (m && v) m.setAttribute("content", v); };
+  setMeta('meta[name="description"]', `${C.bio} ${C.tagline || ""}`.trim());
+  setMeta('meta[property="og:title"]', `${C.name} · ${C.handle}`);
+  setMeta('meta[property="og:description"]', C.bio);
+  setMeta('meta[property="og:image"]', T.ogImage ? new URL(T.ogImage, location.href).href : "");
+  setMeta('meta[name="theme-color"]', T.bg || "#0B0B0B");
+
+  // ------------------------------------------------------------ 1. hero
+  $("#logo").src = C.logo; $("#logo").alt = C.logoAlt || C.name;
+  $("#footLogo").src = C.logo; $("#footLogo").alt = C.logoAlt || C.name;
+  $("#name").textContent = C.name;
+  $("#handle").textContent = C.handle; $("#handle").href = tiktok;
+  $("#tagline").textContent = C.tagline || "";
+  $("#hook").textContent = C.hook || C.bio;
+
+  const icons = {
+    tiktok: '<svg viewBox="0 0 24 24"><path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5 2.6 2.6 0 0 1-2.6-2.6 2.6 2.6 0 0 1 3.4-2.47V9.66a5.7 5.7 0 0 0-.8-.06 5.68 5.68 0 0 0-5.7 5.7 5.7 5.7 0 0 0 5.7 5.7 5.7 5.7 0 0 0 5.7-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3a4.28 4.28 0 0 1-3.26-1.48z"/></svg>',
+    instagram: '<svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 4 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9z"/></svg>',
+    youtube: '<svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>',
+  };
+  $("#socials").innerHTML = Object.entries(C.socials || {}).map(([k, s]) => {
+    const soon = s.comingSoon || !s.url;
+    return soon
+      ? `<span class="btn btn-ghost" aria-disabled="true" data-ref="social-${k}">${icons[k] || ""}${esc(s.label || k)} <small>coming soon</small></span>`
+      : `<a class="btn ${k === "tiktok" ? "btn-accent" : ""}" href="${esc(withUtm(s.url))}" target="_blank" rel="noopener" data-ref="social-${k}">${icons[k] || ""}${esc(s.label || k)}</a>`;
+  }).join("");
+
+  // Hero video: only after load, only on decent connections, never with reduced motion.
+  const loadHeroVideo = () => {
+    const hv = T.heroVideo; if (!hv || reduced) return;
+    const conn = navigator.connection; if (conn && (conn.saveData || /2g/.test(conn.effectiveType || ""))) return;
+    const src = matchMedia("(orientation: portrait)").matches && hv.portrait ? hv.portrait : hv.landscape;
+    if (!src) return;
+    const v = document.createElement("video");
+    v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.preload = "auto"; v.setAttribute("aria-hidden", "true");
+    v.src = src;
+    v.addEventListener("playing", () => v.classList.add("ready"), { once: true });
+    $("#heroBg").appendChild(v);
+    v.play().catch(() => {});
+  };
+  if (document.readyState === "complete") setTimeout(loadHeroVideo, 300);
+  else addEventListener("load", () => setTimeout(loadHeroVideo, 300), { once: true });
+
+  // ------------------------------------------------------------ 2. stats
+  const reviews = Array.isArray(C.reviews) ? C.reviews : [];
+  const F = C.fallbackStats || {};
+  const statsEl = $("#stats");
+  const statDefs = [["followers"], ["likes"], ["videos"], ["kitchens"]]; // boxes are static in the HTML (no layout shift)
+
+  const countUp = (el, to) => {
+    const from = Number(el.dataset.value || 0); el.dataset.value = to;
+    if (reduced) { el.textContent = fmt(to); return; }
+    const t0 = performance.now(), dur = 1400;
+    const tick = (t) => { const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3); el.textContent = fmt(Math.round(from + (to - from) * e)); if (p < 1) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+  };
+  let stats = { followers: F.followers || 0, likes: F.likes || 0, videos: F.videos || reviews.length, kitchens: reviews.length, stale: true, fetchedAt: F.asOf };
+  let statsShown = false;
+  const showStats = () => {
+    for (const [k] of statDefs) countUp(statsEl.querySelector(`[data-stat="${k}"]`), stats[k] || 0);
+    const note = $("#statsNote");
+    const when = stats.fetchedAt ? new Date(stats.fetchedAt).toLocaleString("en-AU", { dateStyle: "medium", timeStyle: "short" }) : "unknown";
+    note.innerHTML = stats.stale
+      ? `<span class="dot"></span><span>Showing saved numbers (last updated ${esc(when)}). Live TikTok counters unavailable right now.</span>`
+      : `<span class="dot live"></span><span>Live from TikTok · updated ${esc(when)}</span>`;
+    renderMilestone(); renderKitStats();
+  };
+  const revealStats = () => { if (statsShown) return; statsShown = true; statsIO.disconnect(); removeEventListener("scroll", onScrollStats); showStats(); };
+  const statsIO = new IntersectionObserver((en) => { if (en.some((e) => e.isIntersecting)) revealStats(); }, { threshold: .3 });
+  statsIO.observe(statsEl);
+  // IntersectionObserver misses a jump scroll straight past the strip (e.g. an anchor link), so also check on scroll.
+  const onScrollStats = () => { if (statsEl.getBoundingClientRect().top < innerHeight) revealStats(); };
+  addEventListener("scroll", onScrollStats, { passive: true });
+
+  (async () => {
+    try {
+      const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 6000);
+      const r = await fetch(`/api/tiktok-stats?creator=${encodeURIComponent(slug)}`, { signal: ctrl.signal }); clearTimeout(t);
+      if (!r.ok) throw new Error(r.status);
+      const j = await r.json();
+      stats = { followers: j.followers ?? stats.followers, likes: j.likes ?? stats.likes, videos: j.videos || stats.videos, kitchens: reviews.length, stale: !!j.stale, fetchedAt: j.fetchedAt || stats.fetchedAt };
+    } catch { /* keep fallback */ }
+    if (statsShown) showStats();
+  })();
+
+  // ------------------------------------------------------------ 3. milestone
+  function renderMilestone() {
+    const ms = (C.milestones || [1000, 2500, 5000, 10000]).slice().sort((a, b) => a - b);
+    const f = stats.followers || 0;
+    const next = ms.find((m) => m > f) || ms[ms.length - 1];
+    const prev = ms.filter((m) => m <= f).pop() || 0;
+    const pct = next > prev ? Math.min(100, Math.round(((f - prev) / (next - prev)) * 100)) : 100;
+    const cta = (C.milestoneCta || "Help them hit {next} — follow on TikTok").replace("{next}", short(next));
+    $("#milestone").innerHTML = `
+      <div>
+        <div class="ms-head"><span>${fmt(f)} followers</span><span class="next">${short(next)}</span></div>
+        <div class="bar" role="progressbar" aria-valuemin="${prev}" aria-valuemax="${next}" aria-valuenow="${f}" aria-label="Progress to ${short(next)} followers"><i></i></div>
+        <div class="ms-scale">${ms.map((m) => `<span class="${m <= f ? "done" : ""}">${short(m)}</span>`).join("")}</div>
+      </div>
+      <a class="btn btn-accent" href="${esc(tiktok)}" target="_blank" rel="noopener" data-ref="milestone-follow">${esc(cta)}</a>`;
+    requestAnimationFrame(() => requestAnimationFrame(() => { $("#milestone .bar > i").style.width = pct + "%"; }));
+  }
+  renderMilestone();
+
+  // ------------------------------------------------------------ 4. reviews
+  const placeholders = C.placeholderThumbs || [];
+  const eye = '<svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5zm0 12.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>';
+  $("#revLede").textContent = `${reviews.length} reviews and counting. Every card links to the kitchen so you can order what ${C.name} actually ate.`;
+  $("#suggestLede").textContent = `Know a truck, stall or home cook ${C.name} should try? Send it through — it goes straight to them and to Secret Kitchens.`;
+
+  const kitchenLink = (r) => r.secretKitchensUrl ? withUtm(r.secretKitchensUrl) : (r.venueUrl || "");
+  $("#grid").innerHTML = reviews.map((r, i) => {
+    const link = kitchenLink(r);
+    const onSk = !!r.secretKitchensUrl;
+    const thumb = r.thumbnail || placeholders[i % placeholders.length] || "";
+    const video = r.tiktokUrl || tiktok;
+    const score = r.kukiScore && r.kukiScore !== "—" ? `${esc(r.kukiScore)}<small>/10</small>` : "—<small>KUKI</small>";
+    return `
+    <article class="card reveal" id="review-${i}" data-i="${i}">
+      <a class="thumb" href="${esc(video)}" target="_blank" rel="noopener" data-embed="${esc(r.tiktokUrl || "")}" aria-label="Watch ${esc(r.title)} on TikTok">
+        <img src="${esc(thumb)}" alt="" width="480" height="854" loading="${i < 2 ? "eager" : "lazy"}" decoding="async">
+        <span class="play"><b></b></span>
+        ${r.pinned ? '<span class="pin">Pinned</span>' : ""}
+        <span class="score" title="Kuki Score">${score}</span>
+        ${r.views ? `<span class="views">${eye}${short(r.views)} views</span>` : ""}
+      </a>
+      <div class="card-body">
+        <h3>${esc(r.title)}</h3>
+        <div class="venue">${esc(r.venue)}${r.suburb ? ` · ${esc(r.suburb)}` : ""}${r.cuisine ? ` · ${esc(r.cuisine)}` : ""}</div>
+        <div class="cta">
+          ${link
+            ? `<a class="btn btn-accent" href="${esc(link)}" target="_blank" rel="noopener" data-ref="order-${i}">Order from this kitchen</a>`
+            : `<a class="btn" href="${esc(video)}" target="_blank" rel="noopener" data-ref="watch-${i}">Watch the review</a>`}
+          ${onSk ? "" : `<a class="invite" href="${esc(registerUrl())}" target="_blank" rel="noopener" data-ref="invite-${i}">Not on Secret Kitchens yet — invite them</a>`}
+        </div>
+      </div>
+    </article>`;
+  }).join("");
+
+  // Lazy TikTok embeds: click a card that has a real video URL -> swap in the official blockquote embed.
+  let embedScript = null;
+  const loadEmbedScript = () => embedScript || (embedScript = new Promise((res) => { const s = document.createElement("script"); s.src = "https://www.tiktok.com/embed.js"; s.async = true; s.onload = res; s.onerror = res; document.body.appendChild(s); }));
+  $("#grid").addEventListener("click", async (e) => {
+    const a = e.target.closest(".thumb"); if (!a) return;
+    const url = a.dataset.embed; if (!url) return; // no video URL known -> plain link to profile
+    const m = url.match(/\/video\/(\d+)/); if (!m) return;
+    e.preventDefault();
+    const box = document.createElement("div"); box.className = "embed";
+    box.innerHTML = `<blockquote class="tiktok-embed" cite="${esc(url)}" data-video-id="${m[1]}" style="max-width:100%;min-width:0"><section><a href="${esc(url)}" target="_blank" rel="noopener">Watch on TikTok</a></section></blockquote>`;
+    a.replaceWith(box);
+    await loadEmbedScript();
+  });
+
+  // Try to upgrade placeholder thumbnails with the real one from TikTok oEmbed (best effort, CORS permitting).
+  const thumbIO = new IntersectionObserver((entries) => {
+    for (const en of entries) {
+      if (!en.isIntersecting) continue;
+      thumbIO.unobserve(en.target);
+      const url = en.target.dataset.embed; if (!url || !/\/video\//.test(url)) continue;
+      fetch("https://www.tiktok.com/oembed?url=" + encodeURIComponent(url)).then((r) => r.ok ? r.json() : null).then((j) => {
+        if (j && j.thumbnail_url) { const img = en.target.querySelector("img"); img.src = j.thumbnail_url; }
+      }).catch(() => {});
+    }
+  }, { rootMargin: "200px" });
+  document.querySelectorAll(".thumb[data-embed]").forEach((el) => thumbIO.observe(el));
+
+  // ------------------------------------------------------------ 5. kitchens scroller
+  const kitchens = [];
+  reviews.forEach((r, i) => { if (r.kitchen === false) return; if (!kitchens.some((k) => k.venue === r.venue)) kitchens.push({ ...r, i }); });
+  $("#scroller").innerHTML = kitchens.map((k) => `
+    <a class="kitchen" href="#review-${k.i}" data-ref="kitchen-${k.i}">
+      <span class="k-score" title="Kuki Score">${esc(k.kukiScore || "—")}</span>
+      <h3>${esc(k.venue)}</h3>
+      <span class="meta">${esc(k.cuisine || "")}${k.suburb ? ` · ${esc(k.suburb)}` : ""}</span>
+      <span class="tag">${k.secretKitchensUrl ? "On Secret Kitchens" : "Not on Secret Kitchens yet"}</span>
+    </a>`).join("");
+
+  // ------------------------------------------------------------ 6. about
+  $("#bio").textContent = C.bio;
+  $("#aboutText").textContent = `${C.name} are based in ${C.location}${C.heritage ? ` with ${C.heritage} roots` : ""}. ${C.tagline || ""}`;
+  $("#lookFor").innerHTML = (C.whatTheyLookFor || []).map((s) => `<li>${esc(s)}</li>`).join("");
+  $("#areas").innerHTML = (C.areas || []).map((s) => `<span class="chip">${esc(s)}</span>`).join("");
+
+  // ------------------------------------------------------------ 7. media kit
+  function renderKitStats() {
+    $("#kitStats").innerHTML = [["Followers", fmt(stats.followers)], ["Likes", fmt(stats.likes)], ["Videos", fmt(stats.videos)], ["Kitchens reviewed", fmt(reviews.length)]]
+      .map(([k, v]) => `<div class="kv"><span>${k}</span><b>${v}</b></div>`).join("");
+  }
+  renderKitStats();
+  const K = C.mediaKit || {};
+  $("#kitAudience").innerHTML = (K.audience || []).map((a) => `<div class="kv"><span>${esc(a.label)}</span>${/update/i.test(a.value) ? `<span class="upd">${esc(a.value)}</span>` : `<b>${esc(a.value)}</b>`}</div>`).join("");
+  $("#kitOffers").innerHTML = (K.offers || []).map((o) => `<div class="offer"><b>${esc(o.title)}</b><span>${esc(o.text)}</span></div>`).join("");
+
+  // ------------------------------------------------------------ forms (7 + 8)
+  const wireForm = (form, kind) => {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const msg = $(".form-msg", form); const btn = $("button[type=submit]", form);
+      if (!form.checkValidity()) { msg.className = "form-msg err"; msg.textContent = "Please fill in the required fields."; form.reportValidity(); return; }
+      const data = Object.fromEntries(new FormData(form).entries());
+      btn.disabled = true; msg.className = "form-msg"; msg.textContent = "Sending…";
+      try {
+        const r = await fetch("/api/creator-forms", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ form: kind, creator: slug, ...data }) });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(j.error || r.status);
+        msg.className = "form-msg ok";
+        msg.textContent = j.delivered ? (kind === "suggest" ? "Sent! Thanks for the tip." : "Sent! They'll be in touch.") : "Received (demo mode — email delivery not configured yet).";
+        form.reset();
+      } catch (err) {
+        msg.className = "form-msg err"; msg.textContent = "Couldn't send: " + err.message;
+      } finally { btn.disabled = false; }
+    });
+  };
+  wireForm($("#contactForm"), "contact");
+  wireForm($("#suggestForm"), "suggest");
+
+  // ------------------------------------------------------------ 9. share
+  $("#followBtn").href = tiktok; $("#followBtn").innerHTML = `${icons.tiktok}Follow on TikTok`;
+  const toast = (t) => { const el = $("#toast"); el.textContent = t; el.classList.add("show"); setTimeout(() => el.classList.remove("show"), 1800); };
+  $("#copyBtn").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(pageUrl); toast("Link copied"); }
+    catch { if (navigator.share) navigator.share({ url: pageUrl, title: C.name }).catch(() => {}); else prompt("Copy this link", pageUrl); }
+  });
+  const qrIO = new IntersectionObserver((en) => {
+    if (!en.some((e) => e.isIntersecting)) return; qrIO.disconnect();
+    const s = document.createElement("script"); s.src = "assets/qrcode.min.js";
+    s.onload = () => { const c = document.createElement("canvas"); $("#qr").appendChild(c); window.QRCode.toCanvas(c, pageUrl, { width: 176, margin: 0, color: { dark: "#0B0B0B", light: "#FFFFFF" } }, () => {}); };
+    document.body.appendChild(s);
+  }, { rootMargin: "300px" });
+  qrIO.observe($("#qr"));
+
+  // ------------------------------------------------------------ 10. footer
+  $("#networkLink").href = withUtm(NET.siteUrl || "https://secret-kitchens.com");
+  $("#registerBtn").href = registerUrl();
+  $("#footNote").textContent = `© ${new Date().getFullYear()} ${C.name}. Reviews are the creator's own opinions.`;
+
+  // Belt and braces: any secret-kitchens.com link gets UTM even if added by hand in data.
+  document.querySelectorAll('a[href*="secret-kitchens.com"]').forEach((a) => { a.href = withUtm(a.href); });
+
+  document.documentElement.classList.remove("loading");
+
+  // ------------------------------------------------------------ reveal on scroll
+  const revIO = new IntersectionObserver((en) => en.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); revIO.unobserve(e.target); } }), { rootMargin: "60px" });
+  document.querySelectorAll(".reveal").forEach((el) => revIO.observe(el));
+})();
+</script>
+</body>
+</html>

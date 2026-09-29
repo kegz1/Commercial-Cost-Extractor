@@ -1,0 +1,300 @@
+{
+  "$schema": "./creator.schema.json",
+  "slug": "kuki-monsters",
+  "name": "Kuki Monsters",
+  "handle": "@kuki.monsters",
+  "logo": "assets/logo.svg",
+  "logoAlt": "Kuki Monsters — Cook Islands",
+  "bio": "We eat so you don't waste your money. Two Islanders. One mission.",
+  "tagline": "Honest reviews • Big appetites • Good laughs",
+  "hook": "Two Islanders eating their way through Brisbane's food trucks, festivals and viral snacks — so you don't waste your money.",
+  "location": "Brisbane, QLD",
+  "heritage": "Cook Islands",
+  "areas": [
+    "Brisbane",
+    "Gold Coast",
+    "Festivals & food events"
+  ],
+  "whatTheyLookFor": [
+    "Value for money — is it worth the price on the board?",
+    "Big flavour and generous serves",
+    "Honest reactions, no sponsored hype",
+    "Islander flavour: things that remind them of home"
+  ],
+  "socials": {
+    "tiktok": {
+      "url": "https://www.tiktok.com/@kuki.monsters",
+      "label": "TikTok",
+      "comingSoon": false
+    },
+    "instagram": {
+      "url": "",
+      "label": "Instagram",
+      "comingSoon": true
+    },
+    "youtube": {
+      "url": "",
+      "label": "YouTube",
+      "comingSoon": true
+    }
+  },
+  "fallbackStats": {
+    "followers": 810,
+    "likes": 5395,
+    "following": 32,
+    "videos": 15,
+    "asOf": "2026-09-28"
+  },
+  "milestones": [
+    1000,
+    2500,
+    5000,
+    10000
+  ],
+  "milestoneCta": "Help them hit {next} — follow on TikTok",
+  "theme": {
+    "bg": "#0B0B0B",
+    "accent": "#F5B841",
+    "accent2": "#F27D26",
+    "text": "#F4EFE6",
+    "displayFont": "Anton",
+    "bodyFont": "Inter",
+    "heroVideo": {
+      "landscape": "",
+      "portrait": "",
+      "poster": "",
+      "posterPortrait": ""
+    },
+    "divider": "assets/tapa-divider.svg",
+    "ogImage": ""
+  },
+  "placeholderThumbs": [
+    "assets/thumb-placeholder-1.svg",
+    "assets/thumb-placeholder-2.svg",
+    "assets/thumb-placeholder-3.svg",
+    "assets/thumb-placeholder-4.svg"
+  ],
+  "mediaKit": {
+    "audience": [
+      {
+        "label": "Age range",
+        "value": "update"
+      },
+      {
+        "label": "Top location",
+        "value": "Brisbane, QLD (update)"
+      },
+      {
+        "label": "Gender split",
+        "value": "update"
+      },
+      {
+        "label": "Avg. views / video",
+        "value": "update"
+      }
+    ],
+    "offers": [
+      {
+        "title": "Food truck reviews",
+        "text": "On-site visit, honest rating and a full-length TikTok review."
+      },
+      {
+        "title": "Event coverage",
+        "text": "Festival and market days: multiple stalls, one recap video plus stories."
+      },
+      {
+        "title": "Viral snack tests",
+        "text": "Trending products and menu items put to the Kuki test."
+      }
+    ],
+    "contactEmail": ""
+  },
+  "network": {
+    "siteUrl": "https://secret-kitchens.com",
+    "registerUrl": "https://secret-kitchens.com/register",
+    "utm": "utm_source=creator&utm_medium=page&utm_campaign=kuki-monsters",
+    "ref": "kuki-monsters"
+  },
+  "reviews": [
+    {
+      "title": "Punjabi Bytes",
+      "venue": "Punjabi Bytes",
+      "cuisine": "Indian street food",
+      "suburb": "",
+      "tiktokUrl": "",
+      "views": 44500,
+      "pinned": true,
+      "kukiScore": "—",
+      "secretKitchensUrl": "",
+      "venueUrl": ""
+    },
+    {
+      "title": "Vanilla Bar",
+      "venue": "Vanilla Bar",
+      "cuisine": "Dessert",
+      "suburb": "",
+      "tiktokUrl": "",
+      "views": 13400,
+      "pinned": true,
+      "kukiScore": "—",
+      "secretKitchensUrl": "",
+      "venueUrl": ""
+    },
+    {
+      "title": "Zesty Cup",
+      "venue": "Zesty Cup",
+      "cuisine": "Drinks & dessert",
+      "suburb": "",
+      "tiktokUrl": "",
+      "views": null,
+      "pinned": false,
+      "kukiScore": "—",
+      "secretKitchensUrl": "",
+      "venueUrl": ""
+    },
+    {
+      "title": "Donut Burger",
+      "venue": "Donut Burger",
+      "cuisine": "Burgers",
+      "suburb": "",
+      "tiktokUrl": "",
+      "views": null,
+      "pinned": false,
+      "kukiScore": "—",
+      "secretKitchensUrl": "",
+      "venueUrl": ""
+    },
+    {
+      "title": "Toatakeova Lamb Buns",
+      "venue": "Toatakeova",
+      "cuisine": "Pacific Islander",
+      "suburb": "",
+      "tiktokUrl": "",
+      "views": null,
+      "pinned": false,
+      "kukiScore": "—",
+      "secretKitchensUrl": "",
+      "venueUrl": ""
+    },
+    {
+      "title": "Viral Cake In A Can",
+      "venue": "Drizzl Dessert Bar",
+      "cuisine": "Dessert",
+      "suburb": "",
+      "tiktokUrl": "",
+      "views": null,
+      "pinned": false,
+      "kukiScore": "—",
+      "secretKitchensUrl": "",
+      "venueUrl": ""
+    },
+    {
+      "title": "Mr. Puff",
+      "venue": "Mr. Puff",
+      "cuisine": "Pastry & snacks",
+      "suburb": "",
+      "tiktokUrl": "",
+      "views": null,
+      "pinned": false,
+      "kukiScore": "—",
+      "secretKitchensUrl": "",
+      "venueUrl": ""
+    },
+    {
+      "title": "Viral Pineapple Kool-Aid",
+      "venue": "Viral snack test",
+      "cuisine": "Viral snack",
+      "suburb": "",
+      "tiktokUrl": "",
+      "views": null,
+      "pinned": false,
+      "kukiScore": "—",
+      "secretKitchensUrl": "",
+      "venueUrl": ""
+    },
+    {
+      "title": "Viral Butter Dipped Cone",
+      "venue": "Viral snack test",
+      "cuisine": "Viral snack",
+      "suburb": "",
+      "tiktokUrl": "",
+      "views": null,
+      "pinned": false,
+      "kukiScore": "—",
+      "secretKitchensUrl": "",
+      "venueUrl": ""
+    },
+    {
+      "title": "Cloud Soufflé Pancakes",
+      "venue": "Cloud Soufflé Pancakes",
+      "cuisine": "Japanese dessert",
+      "suburb": "",
+      "tiktokUrl": "",
+      "views": null,
+      "pinned": false,
+      "kukiScore": "—",
+      "secretKitchensUrl": "",
+      "venueUrl": ""
+    },
+    {
+      "title": "Hulu House Tanghulu",
+      "venue": "Hulu House",
+      "cuisine": "Tanghulu (candied fruit)",
+      "suburb": "",
+      "tiktokUrl": "",
+      "views": null,
+      "pinned": false,
+      "kukiScore": "—",
+      "secretKitchensUrl": "",
+      "venueUrl": ""
+    },
+    {
+      "title": "Dragon's Breath",
+      "venue": "Dragon's Breath",
+      "cuisine": "Dessert",
+      "suburb": "",
+      "tiktokUrl": "",
+      "views": null,
+      "pinned": false,
+      "kukiScore": "—",
+      "secretKitchensUrl": "",
+      "venueUrl": ""
+    },
+    {
+      "title": "Viral Magnum Croissant",
+      "venue": "Viral snack test",
+      "cuisine": "Viral snack",
+      "suburb": "",
+      "tiktokUrl": "",
+      "views": null,
+      "pinned": false,
+      "kukiScore": "—",
+      "secretKitchensUrl": "",
+      "venueUrl": ""
+    },
+    {
+      "title": "Chris Williams Mr Pulled",
+      "venue": "Mr Pulled",
+      "cuisine": "Pulled meats & BBQ",
+      "suburb": "",
+      "tiktokUrl": "",
+      "views": null,
+      "pinned": false,
+      "kukiScore": "—",
+      "secretKitchensUrl": "",
+      "venueUrl": ""
+    },
+    {
+      "title": "Mama's Premium Watermelon Otai",
+      "venue": "Mama's Premium",
+      "cuisine": "Pacific Islander drinks",
+      "suburb": "",
+      "tiktokUrl": "",
+      "views": null,
+      "pinned": false,
+      "kukiScore": "—",
+      "secretKitchensUrl": "",
+      "venueUrl": ""
+    }
+  ]
+}
