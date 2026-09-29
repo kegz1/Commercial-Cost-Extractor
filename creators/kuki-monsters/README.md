@@ -13,7 +13,8 @@ creators/kuki-monsters/
 └── TODO.md               # things that still need filling in by a human
 netlify/functions/
 ├── tiktok-stats.js       # live follower / like / video counters (6h cache, fallback to creator.json)
-└── creator-forms.js      # "Work with me" + "Suggest a kitchen" -> Resend / Airtable
+└── creator-forms.js      # "Work with me" + "Suggest a kitchen" -> Resend / Supabase
+supabase/migrations/…creator_kitchen_suggestions.sql   # table for the suggestions
 scripts/fetch-generated-assets.sh   # pulls the generated imagery + hero loops into assets/
 tests/tiktok-stats.test.js          # npm test
 ```
@@ -56,16 +57,18 @@ you touch the file so the page never looks wrong.
 | `RESEND_API_KEY`    | creator-forms      | Resend API key                                            |
 | `RESEND_FROM`       | creator-forms      | e.g. `Secret Kitchens Creators <creators@secret-kitchens.com>` (verified domain) |
 | `SK_NOTIFY_EMAIL`   | creator-forms      | Secret Kitchens inbox that gets a copy of every submission |
-| `AIRTABLE_API_KEY`  | creator-forms      | personal access token with write access to the base      |
-| `AIRTABLE_BASE_ID`  | creator-forms      | `appXXXXXXXXXXXXXX`                                       |
-| `AIRTABLE_TABLE`    | creator-forms      | defaults to `Kitchen suggestions`                         |
+| `SUPABASE_URL`      | creator-forms      | `https://<project-ref>.supabase.co`                       |
+| `SUPABASE_SERVICE_ROLE_KEY` | creator-forms | server-side only; the function inserts with it (RLS has no anon policy) |
+| `SUPABASE_SUGGESTIONS_TABLE` | creator-forms | defaults to `creator_kitchen_suggestions`               |
 
 Without these the forms still work in "demo mode": the function returns
 `delivered: false`, logs the payload, and the page says so. The creator's own
 address goes in `creator.json → mediaKit.contactEmail`.
 
-Airtable columns expected: `Creator`, `Creator slug`, `Venue`, `Suburb`, `Link`,
-`Why`, `Submitter email`, `Submitted` (typecast is on, so text columns are fine).
+Suggestions land in the `creator_kitchen_suggestions` table. Apply
+`supabase/migrations/20260929000000_creator_kitchen_suggestions.sql` to the Secret
+Kitchens project (SQL editor or `supabase db push`); it creates the table with RLS on and
+no anon policies, so only the function's service-role insert gets through.
 
 ## Clone this for the next creator
 

@@ -47,7 +47,8 @@ one-line edit in `data/creator.json` unless noted.
 ## Integrations (blank slate — nothing is connected yet)
 
 - [ ] Resend: verify sending domain, set `RESEND_API_KEY`, `RESEND_FROM`, `SK_NOTIFY_EMAIL`.
-- [ ] Airtable: create the "Kitchen suggestions" table, set `AIRTABLE_API_KEY`, `AIRTABLE_BASE_ID`.
+- [ ] Supabase: run `supabase/migrations/20260929000000_creator_kitchen_suggestions.sql` on the Secret Kitchens
+      project, set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in Netlify.
 - [ ] Netlify: connect the repo; `netlify.toml` already sets publish dir, functions dir and `/api/*` redirect.
 - [x] Lighthouse mobile: 94 (LCP 1.1 s, TBT 90 ms, CLS 0.14) on `netlify dev` with the SVG fallbacks. Re-check after the assets land.
 - [ ] `netlify dev` note: the CLI downloads a Deno runtime for Edge Functions on first run; on a locked-down

@@ -2,7 +2,7 @@
 //
 // Handles the two forms on a creator page:
 //   - "contact"  (Work with me)      -> email to the creator + Secret Kitchens via Resend
-//   - "suggest"  (Suggest a kitchen) -> Airtable row + email to the creator + Secret Kitchens via Resend
+//   - "suggest"  (Suggest a kitchen) -> Supabase row + email to the creator + Secret Kitchens via Resend
 //
 //   POST /api/creator-forms
 //   { "form": "contact" | "suggest", "creator": "<slug>", ...fields }
@@ -11,9 +11,9 @@
 //   RESEND_API_KEY        Resend API key
 //   RESEND_FROM           e.g. "Secret Kitchens Creators <creators@secret-kitchens.com>"
 //   SK_NOTIFY_EMAIL       Secret Kitchens inbox that gets a copy of every submission
-//   AIRTABLE_API_KEY      Airtable personal access token
-//   AIRTABLE_BASE_ID      e.g. appXXXXXXXXXXXXXX
-//   AIRTABLE_TABLE        table name for suggestions (default "Kitchen suggestions")
+//   SUPABASE_URL              https://<project-ref>.supabase.co
+//   SUPABASE_SERVICE_ROLE_KEY server-side key (never ship to the browser); bypasses RLS for the insert
+//   SUPABASE_SUGGESTIONS_TABLE table name (default "creator_kitchen_suggestions", see supabase/migrations)
 //
 // If a service is not configured the function still returns 200 with
 // delivered:false so the page works as a demo; the payload is logged instead.
@@ -56,10 +56,10 @@ export default async function handler(request) {
     return json({ error: "invalid email" }, 400);
   }
 
-  const results = { airtable: null, email: null };
+  const results = { supabase: null, email: null };
 
   if (form === "suggest") {
-    results.airtable = await sendToAirtable({ creator: creator.name, slug, ...fields });
+    results.supabase = await sendToSupabase({ creator: creator.name, slug, ...fields });
   }
 
   const creatorEmail = creator.mediaKit && creator.mediaKit.contactEmail;
@@ -69,7 +69,7 @@ export default async function handler(request) {
     : `[${creator.name}] Work-with-me enquiry from ${fields.name}`;
   results.email = await sendEmail({ to, subject, replyTo: fields.email, text: renderText(form, creator, fields) });
 
-  const delivered = Boolean((results.email && results.email.delivered) || (results.airtable && results.airtable.delivered));
+  const delivered = Boolean((results.email && results.email.delivered) || (results.supabase && results.supabase.delivered));
   if (!delivered) console.log(`[creator-forms] not configured; ${form} submission for ${slug}:`, fields);
 
   return json({ ok: true, delivered, results }, 200);
@@ -96,35 +96,35 @@ async function sendEmail({ to, subject, text, replyTo }) {
   }
 }
 
-async function sendToAirtable(record) {
-  const key = process.env.AIRTABLE_API_KEY;
-  const base = process.env.AIRTABLE_BASE_ID;
-  const table = process.env.AIRTABLE_TABLE || "Kitchen suggestions";
-  if (!key || !base) return { delivered: false, reason: "airtable not configured" };
+async function sendToSupabase(record) {
+  const url = (process.env.SUPABASE_URL || "").replace(/\/$/, "");
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const table = process.env.SUPABASE_SUGGESTIONS_TABLE || "creator_kitchen_suggestions";
+  if (!url || !key) return { delivered: false, reason: "supabase not configured" };
   try {
-    const res = await fetch(`https://api.airtable.com/v0/${base}/${encodeURIComponent(table)}`, {
+    // Plain PostgREST insert — no SDK needed. Service role key bypasses RLS on purpose (server-side only).
+    const res = await fetch(`${url}/rest/v1/${encodeURIComponent(table)}`, {
       method: "POST",
-      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      headers: {
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        "Content-Type": "application/json",
+        Prefer: "return=representation",
+      },
       body: JSON.stringify({
-        records: [{
-          fields: {
-            Creator: record.creator,
-            "Creator slug": record.slug,
-            Venue: record.venue,
-            Suburb: record.suburb,
-            Link: record.link,
-            Why: record.why,
-            "Submitter email": record.email,
-            Submitted: new Date().toISOString(),
-          },
-        }],
-        typecast: true,
+        creator_slug: record.slug,
+        creator_name: record.creator,
+        venue: record.venue,
+        suburb: record.suburb || null,
+        link: record.link || null,
+        why: record.why || null,
+        submitter_email: record.email || null,
       }),
     });
     const body = await res.json().catch(() => ({}));
     return res.ok
-      ? { delivered: true, id: body.records && body.records[0] && body.records[0].id }
-      : { delivered: false, reason: (body.error && body.error.message) || `airtable ${res.status}` };
+      ? { delivered: true, id: Array.isArray(body) && body[0] ? body[0].id : undefined }
+      : { delivered: false, reason: body.message || body.hint || `supabase ${res.status}` };
   } catch (err) {
     return { delivered: false, reason: String(err.message || err) };
   }
