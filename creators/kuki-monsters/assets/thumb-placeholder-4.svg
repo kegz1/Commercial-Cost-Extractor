@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="854" viewBox="0 0 480 854" role="img" aria-label="Placeholder">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0B0B0B"/>
+      <stop offset="0.55" stop-color="#1A1410"/>
+      <stop offset="1" stop-color="#2A2410"/>
+    </linearGradient>
+    <radialGradient id="s" cx="50%" cy="88%" r="60%">
+      <stop offset="0" stop-color="#F5B841" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#F5B841" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="19"/><feColorMatrix values="0 0 0 0 1 0 0 0 0 0.85 0 0 0 0 0.5 0 0 0 0.08 0"/></filter>
+  </defs>
+  <rect width="480" height="854" fill="url(#g)"/>
+  <rect width="480" height="854" fill="url(#s)"/>
+  <rect width="480" height="854" filter="url(#n)"/>
+  <g fill="#F5B841" opacity="0.35">
+    <circle cx="60" cy="120" r="4"/><circle cx="160" cy="80" r="3"/><circle cx="300" cy="110" r="5"/><circle cx="420" cy="70" r="3"/>
+    <circle cx="100" cy="220" r="3"/><circle cx="380" cy="200" r="4"/><circle cx="240" cy="160" r="2.5"/>
+  </g>
+  <g fill="#0B0B0B" opacity="0.85">
+    <path d="M40 854 l4-120 c-22-8-40-32-36-56 c14 10 26 26 34 44 c-6-24-2-48 14-64 c4 20 4 42-4 62 c12-18 32-30 54-30 c-12 14-28 26-44 36 c20-4 42 2 56 16 c-20 2-40 0-56-8 l-6 120z"/>
+    <path d="M450 854 l-4-96 c20-6 36-28 34-50 c-12 10-24 24-30 42 c4-20 2-44-12-60 c-4 18-4 38 2 56 c-10-16-28-28-48-28 c10 12 24 24 40 32 c-18-2-36 2-48 14 c18 2 36 0 52-6 l6 96z"/>
+  </g>
+</svg>

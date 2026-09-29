@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400" role="img" aria-labelledby="t d">
+  <title id="t">Kuki Monsters — Cook Islands</title>
+  <desc id="d">Placeholder hero mark: hand-brushed gold wordmark on black with a sunset glow and palm silhouettes. Replace with the real logo file.</desc>
+  <defs>
+    <radialGradient id="sun" cx="50%" cy="78%" r="55%">
+      <stop offset="0" stop-color="#F27D26" stop-opacity="0.95"/>
+      <stop offset="0.55" stop-color="#F27D26" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#0B0B0B" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFD873"/>
+      <stop offset="0.6" stop-color="#F5B841"/>
+      <stop offset="1" stop-color="#D9952A"/>
+    </linearGradient>
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <rect width="640" height="400" rx="28" fill="#0B0B0B"/>
+  <rect width="640" height="400" rx="28" fill="url(#sun)"/>
+  <!-- palms -->
+  <g fill="#0B0B0B" opacity="0.9">
+    <path d="M78 400 l6-120 c-30-10-52-40-48-70 c18 14 34 34 44 58 c-8-30-2-62 18-84 c6 26 4 54-4 80 c14-24 40-40 68-40 c-16 18-34 34-56 46 c26-6 54 2 72 20 c-26 4-52 2-74-8 l-8 118z"/>
+    <path d="M560 400 l-6-108 c26-8 46-34 44-62 c-16 12-30 30-38 52 c6-26 2-56-16-76 c-6 24-4 48 2 72 c-12-22-36-36-62-36 c14 16 30 30 50 40 c-22-4-46 2-62 18 c22 4 46 2 66-8 l8 108z"/>
+  </g>
+  <!-- wordmark -->
+  <g filter="url(#rough)" font-family="Anton, Impact, 'Arial Narrow', sans-serif" font-weight="700" text-anchor="middle" fill="url(#gold)">
+    <text x="320" y="178" font-size="96" letter-spacing="2" transform="rotate(-3 320 178)">KUKI</text>
+    <text x="320" y="272" font-size="96" letter-spacing="2" transform="rotate(-3 320 272)">MONSTERS</text>
+  </g>
+  <text x="320" y="330" font-family="Inter, Arial, sans-serif" font-size="22" letter-spacing="6" text-anchor="middle" fill="#F4EFE6" opacity="0.9">COOK ISLANDS</text>
+</svg>

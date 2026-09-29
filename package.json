@@ -1,25 +1,15 @@
 {
-  "name": "invoiceai---commercial-invoice-extractor",
+  "name": "secret-kitchens-creators",
+  "version": "0.1.0",
   "private": true,
-  "version": "0.0.0",
+  "description": "Secret Kitchens creator network pages (static HTML + Netlify functions)",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "react-dom": "^19.2.0",
-    "@google/genai": "^1.30.0",
-    "react": "^19.2.0",
-    "recharts": "^3.5.1",
-    "lucide-react": "^0.555.0",
-    "xlsx": "latest"
+    "dev": "netlify dev",
+    "test": "node --test tests/*.test.js",
+    "lighthouse": "lighthouse http://localhost:8888/creators/kuki-monsters/ --preset=perf --form-factor=mobile --output=json --output-path=./lighthouse.json --chrome-flags=\"--headless --no-sandbox\""
   },
   "devDependencies": {
-    "@types/node": "^22.14.0",
-    "@vitejs/plugin-react": "^5.0.0",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.0"
+    "netlify-cli": "^23.0.0"
   }
 }

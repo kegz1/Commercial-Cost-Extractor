@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="48" viewBox="0 0 240 48" role="presentation">
+  <!-- Fallback tapa / tivaevae-style divider. Replace with tapa-divider.webp from the generated bundle. -->
+  <defs>
+    <pattern id="p" width="60" height="48" patternUnits="userSpaceOnUse">
+      <g fill="none" stroke="#F5B841" stroke-width="1.2">
+        <path d="M0 24 L15 6 L30 24 L45 6 L60 24"/>
+        <path d="M0 24 L15 42 L30 24 L45 42 L60 24"/>
+        <path d="M15 24 L30 12 L45 24 L30 36 Z"/>
+        <circle cx="30" cy="24" r="3"/>
+        <path d="M7.5 15 L7.5 33 M52.5 15 L52.5 33"/>
+      </g>
+      <g fill="#F5B841">
+        <rect x="0" y="0" width="60" height="2"/>
+        <rect x="0" y="46" width="60" height="2"/>
+        <circle cx="15" cy="6" r="1.6"/><circle cx="45" cy="6" r="1.6"/>
+        <circle cx="15" cy="42" r="1.6"/><circle cx="45" cy="42" r="1.6"/>
+      </g>
+    </pattern>
+  </defs>
+  <rect width="240" height="48" fill="url(#p)"/>
+</svg>
